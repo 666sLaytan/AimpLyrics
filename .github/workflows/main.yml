@@ -12,11 +12,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install .NET Framework 4.5 Developer Pack
+      run: |
+        choco install netfx-4.5-devpack -y
+
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
+    - name: Restore NuGet packages
+      run: nuget restore AimpLyrics/AimpLyrics.sln
+
     - name: Build
-      run: msbuild AimpLyrics/AimpLyrics.csproj /p:Configuration=Release
+      run: msbuild AimpLyrics/AimpLyrics.sln /p:Configuration=Release
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
