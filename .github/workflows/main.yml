@@ -7,19 +7,18 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install .NET Framework 4.5 Developer Pack
-      run: |
-        choco install netfx-4.5-devpack -y
-
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
-    - name: Restore NuGet packages
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
+    - name: Restore Packages
       run: nuget restore AimpLyrics/AimpLyrics.sln
 
     - name: Build
